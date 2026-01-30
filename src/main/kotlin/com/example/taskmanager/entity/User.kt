@@ -1,4 +1,4 @@
-package com.example.taskmanager.model
+package com.example.taskmanager.entity
 
 import jakarta.persistence.*
 
@@ -14,7 +14,12 @@ data class User(
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    val gender: Gender = Gender.UNSPECIFIED
+    val gender: Gender = Gender.UNSPECIFIED,
+
+
+    @ManyToMany(mappedBy = "users")
+    val tasks: MutableSet<Task> = mutableSetOf()
+
 )
 
 enum class Gender {

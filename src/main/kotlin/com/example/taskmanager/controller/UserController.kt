@@ -1,6 +1,6 @@
 package com.example.taskmanager.controller
 
-import com.example.taskmanager.model.User
+import com.example.taskmanager.entity.User
 import com.example.taskmanager.repository.UserRepository
 import org.springframework.web.bind.annotation.*
 

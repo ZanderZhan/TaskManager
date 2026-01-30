@@ -1,9 +1,8 @@
 package com.example.taskmanager.repository
 
-import com.example.taskmanager.entity.User
+import com.example.taskmanager.entity.Tag
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface UserRepository : JpaRepository<User, Long> {
-}
+interface TagRepository : JpaRepository<Tag, Long>
