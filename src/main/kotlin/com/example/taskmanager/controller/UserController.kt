@@ -1,23 +1,26 @@
 package com.example.taskmanager.controller
 
+import com.example.taskmanager.entity.Task
 import com.example.taskmanager.entity.User
 import com.example.taskmanager.repository.UserRepository
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/users")
 class UserController(private val userRepository: UserRepository) {
 
-    // GET all users
+    // GET all users with tasks
     @GetMapping
     fun all(): List<User> {
         return userRepository.findAll()
     }
 
-    // GET user by id
+    // GET user by id with tasks
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): User? {
-        return userRepository.findById(id).orElse(null)
+        val user = userRepository.findById(id).orElse(null)
+        return user
     }
 
     // POST create user

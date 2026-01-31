@@ -1,5 +1,6 @@
 package com.example.taskmanager.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -25,9 +26,23 @@ data class Tag(
     val priority: TagPriority = TagPriority.LOW,
 
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "tags")
     val tasks: MutableSet<Task> = mutableSetOf()
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Tag) return false
+        if (id == 0L || other.id == 0L) return false
+        return id == other.id
+    }
+
+    override fun hashCode(): Int = if (id == 0L) {
+        System.identityHashCode(this)
+    } else {
+        id.hashCode()
+    }
+}
 
 
 

@@ -16,11 +16,23 @@ data class User(
     @Enumerated(EnumType.STRING)
     val gender: Gender = Gender.UNSPECIFIED,
 
-
-    @ManyToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
     val tasks: MutableSet<Task> = mutableSetOf()
 
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is User) return false
+        if (id == 0L || other.id == 0L) return false
+        return id == other.id
+    }
+
+    override fun hashCode(): Int = if (id == 0L) {
+        System.identityHashCode(this)
+    } else {
+        id.hashCode()
+    }
+}
 
 enum class Gender {
     UNSPECIFIED,
