@@ -11,7 +11,14 @@ import org.springframework.stereotype.Repository
 interface TaskRepository: JpaRepository<Task, Long> {
     fun findByUserId(userId: Long): List<Task>
     fun getTaskById(id: Long): MutableList<Task>
-    fun getTasksByTagsId(id: Long): MutableList<Task>
+
+    @Query("""
+        SELECT new com.example.taskmanager.dto.TaskWithoutTagsDTO(
+            t.id, t.checked, t.description, t.date, t.user.id
+        )
+        FROM Task t WHERE t.id >= :id ORDER BY t.id ASC LIMIT :count
+    """)
+    fun findByIdWithLimit(@Param("id") id: Long, @Param("count") count: Int): List<TaskWithoutTagsDTO>
 
     @Query("""
         SELECT new com.example.taskmanager.dto.TaskWithoutTagsDTO(

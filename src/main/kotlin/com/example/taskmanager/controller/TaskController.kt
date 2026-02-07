@@ -33,6 +33,11 @@ class TaskController(
         return taskRepository.findByUserId(userId)
     }
 
+    @GetMapping("s")
+    fun getTasksByIdAndCount(@RequestParam id: Long, @RequestParam count: Int): List<TaskWithoutTagsDTO> {
+        return taskRepository.findByIdWithLimit(id, count)
+    }
+
     @GetMapping()
     fun getTaskById(@RequestParam id: Long): Task? {
         return taskRepository.findById(id).orElse(null)
